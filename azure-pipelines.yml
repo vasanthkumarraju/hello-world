@@ -1,0 +1,21 @@
+trigger:
+  branches:
+    include:
+      - master
+
+pool:
+  vmImage: ubuntu-latest
+
+steps:
+- task: Maven@3
+  inputs:
+    mavenPomFile: 'pom.xml'
+    goals: 'clean package'
+    publishJUnitResults: false
+  displayName: 'Build with Maven'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    pathToPublish: 'target'
+    artifactName: 'drop'
+  displayName: 'Publish build artifacts'
